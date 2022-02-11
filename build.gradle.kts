@@ -15,8 +15,8 @@ plugins {
     id("org.jetbrains.qodana") version "0.1.13"
 }
 
-group = "com.nekofar.milad"
-version = "1.0.0-alpha.0"
+group = properties("pluginGroup")
+version = properties("pluginVersion")
 
 repositories {
     mavenCentral()
@@ -30,6 +30,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
+    pluginName.set(properties("pluginName"))
     version.set(properties("platformVersion"))
     type.set(properties("platformType"))
 
@@ -70,6 +71,7 @@ tasks {
     }
 
     patchPluginXml {
+        version.set(properties("pluginVersion"))
         sinceBuild.set(properties("pluginSinceBuild"))
         untilBuild.set(properties("pluginUntilBuild"))
 
