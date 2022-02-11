@@ -7,9 +7,9 @@
 [![Twitter Follow](https://img.shields.io/twitter/follow/nekofar?style=flat)](https://twitter.com/nekofar)
 
 <!-- Plugin description -->
-Provides boilerplate codes for easier new project creation using [Nuxt.js](https://nuxtjs.org) CLI.
+Create an app in seconds and setup project through [Nuxt.js](https://nuxtjs.org) official scaffolding tool.
 
-Speed up the setup phase of contract development for both new and experienced developers.
+Speed up the setup phase of app development for both new and experienced developers.
 <!-- Plugin description end -->
 
 ## Installation
