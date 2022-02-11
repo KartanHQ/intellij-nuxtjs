@@ -21,8 +21,10 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version.set("2021.3.2")
+    version.set(properties("platformVersion"))
+    type.set(properties("platformType"))
 }
+
 tasks {
     wrapper {
         gradleVersion = properties("gradleVersion")
