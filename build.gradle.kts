@@ -57,6 +57,9 @@ tasks {
     }
 
     patchPluginXml {
+        sinceBuild.set(properties("pluginSinceBuild"))
+        untilBuild.set(properties("pluginUntilBuild"))
+
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
             changelog.run {
