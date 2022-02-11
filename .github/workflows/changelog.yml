@@ -1,0 +1,49 @@
+
+name: Changelog
+on:
+  # Trigger the workflow on pushes to only the 'develop' branch
+  push:
+    branches: [ develop]
+  # Trigger the workflow on manual dispatch
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    name: Generate changelog
+    runs-on: ubuntu-latest
+    steps:
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 0
+
+      # Generate a changelog
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v1.1.6
+        id: git-cliff
+        with:
+          config: .github/changelog/cliff.toml
+          args: --verbose
+        env:
+          OUTPUT: CHANGELOG.md
+
+      # Print the changelog
+      - name: Print the changelog
+        run: cat "${{ steps.git-cliff.outputs.changelog }}"
+
+      # Create pull request
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.12.1
+        with:
+          delete-branch: true
+          branch-suffix: short-commit-hash
+          base: develop
+          commit-message: |
+            docs(changelog): update the changelog file
+            
+            [skip ci]
+          title: "docs(changelog): update the changelog file"
+          body: "Current pull request contains patched `CHANGELOG.md` file."
+          labels: documentation
