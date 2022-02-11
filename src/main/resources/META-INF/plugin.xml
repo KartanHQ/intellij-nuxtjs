@@ -1,22 +1,20 @@
-<idea-plugin>
+<idea-plugin url="https://github.com/nekofar/intellij-nuxtjs">
     <id>com.nekofar.milad.intellij-nuxtjs</id>
-    <name>Plugin display name here</name>
-    <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
-
-    <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-    ]]></description>
+    <!--suppress PluginXmlCapitalization -->
+    <name>Nuxt.js</name>
+    <vendor email="milad@nekofar.com" url="https://github.com/nekofar">Milad Nekofar</vendor>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
+    <depends>JavaScript</depends>
+    <depends>org.jetbrains.plugins.vue</depends>
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+        <!-- works in WebStorm and other SmallIDEs -->
+        <directoryProjectGenerator implementation="com.nekofar.milad.intellij.nuxtjs.cli.NuxtCliProjectGenerator"/>
+        <projectTemplatesFactory implementation="com.nekofar.milad.intellij.nuxtjs.cli.NuxtProjectTemplateFactory"/>
+        <!-- works in new IDEA wizard -->
+        <moduleBuilder builderClass="com.nekofar.milad.intellij.nuxtjs.cli.NuxtCliProjectModuleBuilder"/>
     </extensions>
-
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
 </idea-plugin>
