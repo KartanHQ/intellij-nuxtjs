@@ -11,6 +11,8 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Nuxt.js" language="JavaScript" fileNames="nuxt.config.js"
+                  implementationClass="com.nekofar.milad.intellij.nuxtjs.NuxtFileType"/>
         <!-- works in WebStorm and other SmallIDEs -->
         <directoryProjectGenerator implementation="com.nekofar.milad.intellij.nuxtjs.cli.NuxtCliProjectGenerator"/>
         <projectTemplatesFactory implementation="com.nekofar.milad.intellij.nuxtjs.cli.NuxtProjectTemplateFactory"/>

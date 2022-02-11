@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>File</title>
+    <g id="File" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="any_type" transform="translate(3.000000, 1.000000)" fill="#9AA7B0" fill-rule="nonzero">
+            <polygon id="Path" points="4 0 0 4 4 4"></polygon>
+            <polygon id="Path" points="5 0 5 5 0 5 0 14 10 14 10 0"></polygon>
+        </g>
+        <g id="colored-logo" transform="translate(6.000000, 9.000000)">
+            <path d="M3.53042752,0.289051859 C3.306281,-0.0963471416 2.74590427,-0.0963540981 2.52175775,0.289051859 L0.0788897557,4.48937297 C-0.145258849,4.87477893 0.134926037,5.3565329 0.583221855,5.3565329 L2.49026552,5.3565329 C2.29870341,5.18911692 2.22776762,4.89950941 2.3727279,4.65102893 L4.22284624,1.47961415 L3.53042752,0.289051859 Z" id="Path" fill="#80EEC0"></path>
+            <path d="M5.0782844,1.21041711 C5.26378737,0.895084328 5.72753782,0.895084328 5.91304079,1.21041711 L7.93469337,4.64703588 C8.12022416,4.96236866 7.88836284,5.3565329 7.51737082,5.3565329 L3.47397523,5.3565329 C3.10297626,5.3565329 2.87109407,4.96236866 3.05659704,4.64703588 L5.0782844,1.21041711 Z" id="Path" fill="#00DC82" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
