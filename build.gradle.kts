@@ -1,3 +1,5 @@
+fun properties(key: String) = project.findProperty(key).toString()
+
 plugins {
     id("org.jetbrains.intellij") version "1.3.1"
     kotlin("jvm") version "1.6.20-M1"
@@ -22,6 +24,10 @@ intellij {
     version.set("2021.3.2")
 }
 tasks {
+    wrapper {
+        gradleVersion = properties("gradleVersion")
+    }
+
     patchPluginXml {
         changeNotes.set("""
             Add change notes here.<br>
