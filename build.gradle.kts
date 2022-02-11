@@ -6,6 +6,8 @@ plugins {
     id("org.jetbrains.intellij") version "1.3.1"
     kotlin("jvm") version "1.6.20-M1"
     java
+    // Gradle Changelog Plugin
+    id("org.jetbrains.changelog") version "1.3.1"
 }
 
 group = "com.nekofar.milad"
@@ -30,6 +32,14 @@ intellij {
     plugins.set(properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty))
 }
 
+// Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
+changelog {
+    version.set(properties("pluginVersion"))
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[unreleased]")
+    groups.set(emptyList())
+}
+
 tasks {
     // Set the JVM compatibility versions
     properties("javaVersion").let {
@@ -47,9 +57,12 @@ tasks {
     }
 
     patchPluginXml {
-        changeNotes.set("""
-            Add change notes here.<br>
-            <em>most HTML tags may be used</em>        """.trimIndent())
+        // Get the latest available change notes from the changelog file
+        changeNotes.set(provider {
+            changelog.run {
+                getOrNull(properties("pluginVersion")) ?: getLatest()
+            }.toHTML()
+        })
     }
 }
 tasks.getByName<Test>("test") {
