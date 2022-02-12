@@ -1,5 +1,5 @@
 <idea-plugin url="https://github.com/nekofar/intellij-nuxtjs">
-    <id>com.nekofar.milad.intellij-nuxtjs</id>
+    <id>com.nekofar.milad.intellij.nuxtjs</id>
     <!--suppress PluginXmlCapitalization -->
     <name>Nuxt.js</name>
     <vendor email="milad@nekofar.com" url="https://github.com/nekofar">Milad Nekofar</vendor>
