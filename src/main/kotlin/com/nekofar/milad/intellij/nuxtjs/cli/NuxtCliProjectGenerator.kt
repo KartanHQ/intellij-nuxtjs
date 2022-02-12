@@ -1,6 +1,7 @@
 package com.nekofar.milad.intellij.nuxtjs.cli
 
 import com.intellij.execution.filters.Filter
+import com.intellij.javascript.CreateRunConfigurationUtil
 import com.intellij.lang.javascript.boilerplate.NpmPackageProjectGenerator
 import com.intellij.lang.javascript.boilerplate.NpxPackageDescriptor
 import com.intellij.openapi.project.Project
@@ -22,4 +23,11 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
     override fun generatorArgs(project: Project, baseDir: VirtualFile) = arrayOf("--overwrite-dir")
     override fun filters(project: Project, baseDir: VirtualFile): Array<Filter> = emptyArray()
     override fun customizeModule(baseDir: VirtualFile, entry: ContentEntry?) { /* Do nothing */ }
+
+    override fun onGettingSmartAfterProjectGeneration(project: Project, baseDir: VirtualFile) {
+        super.onGettingSmartAfterProjectGeneration(project, baseDir)
+        CreateRunConfigurationUtil.npmConfiguration(project, "dev")
+        CreateRunConfigurationUtil.npmConfiguration(project, "build")
+        CreateRunConfigurationUtil.npmConfiguration(project, "start")
+    }
 }
