@@ -8,11 +8,6 @@ on:
     types: [ opened, reopened ]
   # Trigger the workflow on manual dispatch
   workflow_dispatch:
-    inputs:
-      qodana:
-        type: boolean
-        required: true
-        description: Run Qodana
 
 jobs:
 
@@ -81,11 +76,6 @@ jobs:
         with:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/build/reports/pluginVerifier
-
-      # Run Qodana inspections
-      - name: Qodana - Code Inspection
-        if: github.event_name == 'push' || github.event.inputs.qodana == 'true'
-        uses: JetBrains/qodana-action@v4.2.5
 
       # Prepare plugin archive content for creating artifact
       - name: Prepare Plugin Artifact
