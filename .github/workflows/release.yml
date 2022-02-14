@@ -1,5 +1,5 @@
 
-name: Release
+name: Release & Publish
 on:
   release:
     types: [prereleased, released]
