@@ -1,8 +1,8 @@
 name: Code Quality
 on:
-  # Trigger the workflow on pushes to only the 'develop' branch
+  # Trigger the workflow on pushes to only the 'release' branches
   push:
-    branches: [ develop ]
+    branches: [ 'release/*' ]
   # Trigger the workflow on any pull request
   pull_request:
     types: [ opened, reopened ]
