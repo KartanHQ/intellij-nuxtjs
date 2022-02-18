@@ -1,8 +1,8 @@
 name: Code Quality
 on:
-  # Trigger the workflow on pushes to only the 'develop' branch
+  # Trigger the workflow on pushes to only the 'release' branches
   push:
-    branches: [ develop ]
+    branches: [ 'release/*' ]
   # Trigger the workflow on any pull request
   pull_request:
     types: [ opened, reopened ]
@@ -26,6 +26,6 @@ jobs:
       # Uploading a SARIF-formatted Qodana report to GitHub
       - name: Uploading Qodana report to GitHub
         if: ${{ false }}
-        uses: github/codeql-action/upload-sarif@v1.1.0
+        uses: github/codeql-action/upload-sarif@v1.1.2
         with:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
