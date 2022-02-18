@@ -1,3 +1,4 @@
+
 name: Build
 on:
   # Trigger the workflow on pushes to only the 'master' and release branches
@@ -129,3 +130,8 @@ jobs:
           ${{ needs.build.outputs.changelog }}
           EOM
           )"
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true

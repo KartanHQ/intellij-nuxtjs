@@ -46,3 +46,7 @@ jobs:
           title: "docs(changelog): update the changelog file"
           body: "Current pull request contains patched `CHANGELOG.md` file."
           labels: documentation
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
