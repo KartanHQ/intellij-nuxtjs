@@ -5,14 +5,13 @@
 header = """
 # Changelog
 All notable changes to this project will be documented in this file.\n
+## [Unreleased]
 """
 # template for the changelog body
 # https://tera.netlify.app/docs/#introduction
 body = """
 {% if version %}\
     ## [{{ version | replace(from="v", to="") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
-{% else %}\
-    ## [unreleased]
 {% endif %}\
 {% for group, commits in commits | group_by(attribute="group") %}
     ### {{ group | upper_first }}
