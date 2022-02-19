@@ -1,4 +1,3 @@
-
 name: Changelog
 on:
   # Trigger the workflow on pushes to only the 'release' branches
@@ -19,6 +18,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Set environment variables
+      - name: Export Properties
+        id: properties
+        shell: bash
+        run: |
+          PROPERTIES="$(./gradlew properties --console=plain -q)"
+          VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
+
+          echo "::set-output name=version::$VERSION"
+
       # Generate a changelog
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v1.1.6
@@ -28,6 +37,7 @@ jobs:
           args: --verbose
         env:
           OUTPUT: CHANGELOG.md
+          TAG: "${{ steps.properties.outputs.version }}"
 
       # Print the changelog
       - name: Print the changelog
