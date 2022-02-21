@@ -1,8 +1,11 @@
 name: Build
 on:
-  # Trigger the workflow on pushes to only the 'master' and release branches
+  # Trigger the workflow on pushes to only the 'master', 'support' and 'release' branches
   push:
-    branches: [ master, 'release/*' ]
+    branches:
+      - master
+      - support/*
+      - release/*
   # Trigger the workflow on any pull request
   pull_request:
     types: [ opened, reopened ]
@@ -99,7 +102,7 @@ jobs:
   # If accepted and published, release workflow would be triggered
   releaseDraft:
     name: Release Draft
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/support/')
     needs: build
     runs-on: ubuntu-latest
     steps:

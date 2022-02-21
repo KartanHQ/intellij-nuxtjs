@@ -1,8 +1,10 @@
 name: Changelog
 on:
-  # Trigger the workflow on pushes to only the 'release' branches
+  # Trigger the workflow on pushes to only the 'hotfix' and 'release' branches
   push:
-    branches: [ 'release/*' ]
+    branches:
+      - hotfix/*
+      - release/*
   # Trigger the workflow on manual dispatch
   workflow_dispatch:
 
