@@ -44,7 +44,7 @@ jobs:
 
       # Update Unreleased section with the current release note
       - name: Patch Changelog
-        if: ${{ false }} && ${{ steps.properties.outputs.changelog != '' }}
+        if: false && ${{ steps.properties.outputs.changelog != '' }}
         env:
           CHANGELOG: ${{ steps.properties.outputs.changelog }}
         run: |
