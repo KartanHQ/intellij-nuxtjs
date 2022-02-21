@@ -3,7 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ## [1.0.0] - 2022-02-19
+
 ### Features
+
 - Implement project generation trough `create-nuxt-app`
 - Add custom file type and unique icon for `nuxt.config.js`
 - Add run configurations after project generation
