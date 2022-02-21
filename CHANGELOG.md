@@ -2,12 +2,6 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-## [1.0.2] - 2022-02-21
-
-### Bug Fixes
-
-- Update changelog section on plugin description
-
 ## [1.0.0] - 2022-02-19
 
 ### Features
