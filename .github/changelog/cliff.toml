@@ -52,9 +52,9 @@ filter_commits = true
 # glob pattern for matching git tags
 tag_pattern = "v[0-9]*"
 # regex for skipping tags
-skip_tags = "(v1.0.2)"
+skip_tags = "v1.0.[2|3]"
 # regex for ignoring tags
-ignore_tags = "(alpha|beta|erp)"
+ignore_tags = "-(alpha|beta|erp)"
 # sort the tags topologically
 topo_order = false
 # sort the commits inside sections by oldest/newest order
