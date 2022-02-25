@@ -1,0 +1,91 @@
+
+name: Running UI Tests
+on:
+  # Trigger the workflow on manual dispatch
+  workflow_dispatch:
+
+jobs:
+
+  testUI:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            runIde: |
+              export DISPLAY=:99.0
+              Xvfb -ac :99 -screen 0 1920x1080x16 &
+              mkdir -p build/reports
+              gradle runIdeForUiTests > build/reports/idea.log &
+          - os: windows-latest
+            runIde: start gradlew.bat runIdeForUiTests
+          - os: macos-latest
+            runIde: |
+              mkdir -p build/reports
+              ./gradlew runIdeForUiTests > build/reports/idea.log &
+
+    steps:
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2.4.0
+
+      # Setup Java 11 environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v2.5.0
+        with:
+          distribution: zulu
+          java-version: 11
+          cache: gradle
+
+      # Setup video recording environment
+      - name: Setup FFmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v1
+        with:
+         # Not strictly necessary, but it may prevent rate limit
+         # errors especially on GitHub-hosted macos machines.
+         token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Pass ide license
+      - name: Decode key file
+        run: |
+          mkdir -p build/idea-sandbox/config-uiTest
+          cd build/idea-sandbox/config-uiTest
+          echo -n "$IDEA_KEY_FILE" | base64 -d > idea.key
+        env:
+          IDEA_KEY_FILE: ${{ secrets.IDEA_KEY_FILE }}
+
+      # Run IDEA prepared for UI testing
+      - name: Run IDE
+        run: ${{ matrix.runIde }}
+
+      # Wait for IDEA to be started
+      - name: Health Check
+        uses: jtalk/url-health-check-action@v2.1
+        with:
+          url: http://127.0.0.1:8082
+          max-attempts: 15
+          retry-delay: 30s
+
+      # Run tests
+      - name: Tests
+        run: ./gradlew test
+
+      # Move video to reports
+      - name: Move video
+        if: ${{ failure() }}
+        run: mv video build/reports
+
+      # Save fails report
+      - name: Save fails report
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: ui-test-fails-report-${{ matrix.os }}
+          path: |
+            build/reports
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
