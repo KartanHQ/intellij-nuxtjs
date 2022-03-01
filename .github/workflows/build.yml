@@ -49,17 +49,29 @@ jobs:
           PROPERTIES="$(./gradlew properties --console=plain -q)"
           VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
           NAME="$(echo "$PROPERTIES" | grep "^pluginName:" | cut -f2- -d ' ')"
-          CHANGELOG="$(./gradlew getChangelog `[[ $GITHUB_REF == refs/heads/release/* ]] && echo '--unreleased'` --no-header --console=plain -q)"
-          CHANGELOG="${CHANGELOG//'%'/'%25'}"
-          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
-          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
 
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=name::$NAME"
-          echo "::set-output name=changelog::$CHANGELOG"
           echo "::set-output name=pluginVerifierHomeDir::~/.pluginVerifier"
 
           ./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
+
+      # Extract changelog information
+      - name: Prepare Changelog
+        id: changelog
+        shell: bash
+        run: |
+          GRADLE_PARAMS=(--no-header --console=plain --quiet)
+          if [[ $GITHUB_REF == refs/heads/release/* || $GITHUB_REF == refs/pull/* ]]; then
+            GRADLE_PARAMS+=(--unreleased)
+          fi
+          
+          CHANGELOG="$(./gradlew getChangelog ${GRADLE_PARAMS[@]})"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+          
+          echo "::set-output name=changelog::$CHANGELOG"
 
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache
