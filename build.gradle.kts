@@ -20,12 +20,17 @@ version = properties("pluginVersion")
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://cache-redirector.jetbrains.com/intellij-dependencies") }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("com.intellij.remoterobot:remote-robot:0.11.13")
+    testImplementation("com.intellij.remoterobot:remote-fixtures:0.11.13")
+    // Video Recording
+    testImplementation("com.automation-remarks:video-recorder-junit5:2.0")
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -92,6 +97,19 @@ tasks {
                 getOrNull(properties("pluginVersion")) ?: getLatest()
             }.toHTML()
         })
+    }
+
+    // Configure UI tests plugin
+    // Read more: https://github.com/JetBrains/intellij-ui-test-robot
+    runIdeForUiTests {
+        systemProperty("robot-server.port", "8082")
+        systemProperty("ide.mac.message.dialogs.as.sheets", "false")
+        systemProperty("jb.privacy.policy.text", "<!--999.999-->")
+        systemProperty("jb.consents.confirmation.enabled", "false")
+        systemProperty("ide.mac.file.chooser.native", "false")
+        systemProperty("apple.laf.useScreenMenuBar", "false")
+        systemProperty("idea.trust.all.projects", "true")
+        systemProperty("ide.show.tips.on.startup.default.value", "false")
     }
 
     signPlugin {
