@@ -1,8 +1,8 @@
-<idea-plugin url="https://github.com/nekofar/intellij-nuxtjs">
+<idea-plugin>
     <id>com.nekofar.milad.intellij.nuxtjs</id>
     <!--suppress PluginXmlCapitalization -->
     <name>Nuxt.js</name>
-    <vendor email="milad@nekofar.com" url="https://github.com/nekofar">Milad Nekofar</vendor>
+    <vendor email="hello@kartan.net" url="https://kartan.net">Kartan</vendor>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
