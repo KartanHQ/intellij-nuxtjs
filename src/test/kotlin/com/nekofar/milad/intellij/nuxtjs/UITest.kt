@@ -21,7 +21,7 @@ import java.time.Duration.ofSeconds
 
 @TestMethodOrder(OrderAnnotation::class)
 @ExtendWith(RemoteRobotExtension::class)
-class NuxtUITest {
+class UITest {
     init {
         StepsLogger.init()
     }
