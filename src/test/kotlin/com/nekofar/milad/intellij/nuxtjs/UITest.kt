@@ -5,7 +5,7 @@ import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.search.locators.byXpath
 import com.intellij.remoterobot.stepsProcessing.step
 import com.intellij.remoterobot.utils.waitFor
-import com.nekofar.milad.intellij.nuxtjs.fixtures.TerminalFixture
+import com.nekofar.milad.intellij.nuxtjs.fixtures.terminal
 import com.nekofar.milad.intellij.nuxtjs.pages.dialog
 import com.nekofar.milad.intellij.nuxtjs.pages.idea
 import com.nekofar.milad.intellij.nuxtjs.pages.welcomeFrame
@@ -21,7 +21,7 @@ import java.time.Duration.ofSeconds
 
 @TestMethodOrder(OrderAnnotation::class)
 @ExtendWith(RemoteRobotExtension::class)
-class NuxtUITest {
+class UITest {
     init {
         StepsLogger.init()
     }
@@ -53,11 +53,8 @@ class NuxtUITest {
         idea {
             waitForFinishBackgroundTasks()
             step("Find terminal") {
-                val terminal: TerminalFixture = find(TerminalFixture.byType())
-                val screenLines = terminal.screenLines
+                terminal().click()
             }
-
-            waitForFinishBackgroundTasks()
             step("Find config file") {
                 with(projectViewTree) {
                     if (hasText("nuxt.config.js").not()) {
