@@ -9,7 +9,7 @@
 <!-- Plugin description -->
 Create an app in seconds and setup project through [Nuxt.js](https://nuxtjs.org) official scaffolding tool.
 
-Speed up the setup phase of app development for both new and experienced developers.
+Speed up the setup phase of application development for both new and experienced developers.
 <!-- Plugin description end -->
 
 ## Installation
