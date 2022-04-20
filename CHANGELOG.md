@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+## [1.1.0-alpha.7] - 2022-04-20
+
+### Features
+
+- Implement error handle and report through github issues
+
 ## [1.0.4] - 2022-02-21
 
 ### Bug Fixes
