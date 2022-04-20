@@ -18,5 +18,7 @@
         <projectTemplatesFactory implementation="com.nekofar.milad.intellij.nuxtjs.cli.NuxtProjectTemplateFactory"/>
         <!-- works in new IDEA wizard -->
         <moduleBuilder builderClass="com.nekofar.milad.intellij.nuxtjs.cli.NuxtCliProjectModuleBuilder"/>
+
+        <errorHandler implementation="com.nekofar.milad.intellij.nuxtjs.diagnostic.NuxtErrorReportSubmitter" />
     </extensions>
 </idea-plugin>
