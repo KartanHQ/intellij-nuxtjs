@@ -27,7 +27,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("com.intellij.remoterobot:remote-robot:0.11.13")
+    testImplementation("com.intellij.remoterobot:remote-robot:0.11.14")
     testImplementation("com.intellij.remoterobot:remote-fixtures:0.11.14")
     // Video Recording
     testImplementation("com.automation-remarks:video-recorder-junit5:2.0")
