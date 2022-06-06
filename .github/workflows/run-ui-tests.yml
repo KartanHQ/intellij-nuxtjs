@@ -29,11 +29,11 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.0.1
+        uses: actions/checkout@v3.0.2
 
       # Setup Java 11 environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: zulu
           java-version: 11
@@ -62,7 +62,7 @@ jobs:
 
       # Wait for IDEA to be started
       - name: Health Check
-        uses: jtalk/url-health-check-action@v2.1
+        uses: jtalk/url-health-check-action@v2.2
         with:
           url: http://127.0.0.1:8082
           max-attempts: 15
@@ -80,7 +80,7 @@ jobs:
       # Save fails report
       - name: Save fails report
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: ui-test-fails-report-${{ matrix.os }}
           path: |

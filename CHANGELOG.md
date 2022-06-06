@@ -1,8 +1,9 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-## [1.1.0-alpha.8] - 2022-04-20
+## [1.1.0-alpha.9] - 2022-06-06
 
 ### Features
 
@@ -13,6 +14,18 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Solve an issue related to generate change notes
+
+## [1.0.3] - 2022-02-21
+
+### Bug Fixes
+
+- Update changelog section on plugin description
+
+## [1.0.2] - 2022-02-21
+
+### Bug Fixes
+
+- Update changelog section on plugin description
 
 ## [1.0.0] - 2022-02-19
 
