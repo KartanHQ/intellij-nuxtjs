@@ -38,7 +38,7 @@ jobs:
           config: .github/changelog/cliff.toml
           args: --verbose
         env:
-          GIT_CLIFF_OUTPUT: CHANGELOG.md
+          OUTPUT: CHANGELOG.md
           GIT_CLIFF_TAG: "${{ steps.properties.outputs.version }}"
 
       # Print the changelog
