@@ -3,7 +3,6 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-## [1.1.0-alpha.9] - 2022-06-06
 
 ### Features
 
