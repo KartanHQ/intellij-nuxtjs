@@ -57,7 +57,7 @@ tag_pattern = "v[0-9]*"
 # regex for skipping tags
 skip_tags = "v0.1.0-beta.1"
 # regex for ignoring tags
-ignore_tags = "-(alpha|beta|erp)"
+ignore_tags = "(1.1.0$|-(alpha|beta|erp))"
 # sort the tags chronologically
 date_order = false
 # sort the commits inside sections by oldest/newest order
