@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.properties.outputs.version }}
-      changelog: ${{ steps.properties.outputs.changelog }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
     steps:
 
       # Check out current repository
