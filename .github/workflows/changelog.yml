@@ -32,7 +32,7 @@ jobs:
 
       # Generate a changelog
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v1.1.7
+        uses: orhun/git-cliff-action@v1.1.8
         id: git-cliff
         with:
           config: .github/changelog/cliff.toml
