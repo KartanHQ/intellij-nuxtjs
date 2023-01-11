@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("com.intellij.remoterobot:remote-robot:0.11.16")
     testImplementation("com.intellij.remoterobot:remote-fixtures:0.11.16")
