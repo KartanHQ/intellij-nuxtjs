@@ -29,7 +29,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@v3.3.0
 
       # Setup Java 11 environment for the next steps
       - name: Setup Java
@@ -80,7 +80,7 @@ jobs:
       # Save fails report
       - name: Save fails report
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: ui-test-fails-report-${{ matrix.os }}
           path: |
