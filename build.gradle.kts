@@ -90,9 +90,10 @@ tasks {
         // Get the latest available change notes from the changelog file
         changeNotes.set(provider {
             with(changelog) {
+                val changelogItem = getOrNull(properties("pluginVersion"))
+                    ?: runCatching { getLatest() }.getOrElse { getUnreleased() }
                 renderItem(
-                    getOrNull(properties("pluginVersion"))
-                        ?: runCatching { getLatest() }.getOrElse { getUnreleased() },
+                    changelogItem.withHeader(false),
                     Changelog.OutputType.HTML,
                 )
             }
