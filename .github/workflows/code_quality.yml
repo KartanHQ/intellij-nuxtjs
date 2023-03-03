@@ -24,12 +24,12 @@ jobs:
 
       # Run Qodana inspections
       - name: Qodana - Code Inspection
-        uses: JetBrains/qodana-action@v2022.3.3
+        uses: JetBrains/qodana-action@v2022.3.4
 
       # Uploading a SARIF-formatted Qodana report to GitHub
       - name: Uploading Qodana report to GitHub
         if: ${{ false }}
-        uses: github/codeql-action/upload-sarif@v2.2.4
+        uses: github/codeql-action/upload-sarif@v2.2.5
         with:
           sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
 
