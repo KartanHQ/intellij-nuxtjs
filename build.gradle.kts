@@ -9,7 +9,7 @@ plugins {
     // Kotlin support
     id("org.jetbrains.kotlin.jvm") version "1.8.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.13.1"
+    id("org.jetbrains.intellij") version "1.13.2"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "2.0.0"
     // Gradle Qodana Plugin
@@ -28,8 +28,8 @@ dependencies {
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("com.intellij.remoterobot:remote-robot:0.11.16")
-    testImplementation("com.intellij.remoterobot:remote-fixtures:0.11.16")
+    testImplementation("com.intellij.remoterobot:remote-robot:0.11.18")
+    testImplementation("com.intellij.remoterobot:remote-fixtures:0.11.18")
     // Video Recording
     testImplementation("com.automation-remarks:video-recorder-junit5:2.0")
 }
