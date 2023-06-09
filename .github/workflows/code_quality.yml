@@ -20,7 +20,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       # Run Qodana inspections
       - name: Qodana - Code Inspection
