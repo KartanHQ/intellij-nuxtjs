@@ -1,8 +1,15 @@
+# GitHub Actions Workflow for launching UI tests on Linux, Windows, and Mac in the following steps:
+# - prepare and launch IDE with your plugin and robot-server plugin, which is needed to interact with UI
+# - wait for IDE to start
+# - run UI tests with separate Gradle task
+#
+# Please check https://github.com/JetBrains/intellij-ui-test-robot for information about UI tests with IntelliJ Platform
+#
+# Workflow is triggered manually.
 
-name: Running UI Tests
+name: Run UI Tests
 on:
-  # Trigger the workflow on manual dispatch
-  workflow_dispatch:
+  workflow_dispatch
 
 jobs:
 
@@ -12,49 +19,29 @@ jobs:
       fail-fast: false
       matrix:
         include:
-#          - os: ubuntu-latest
-#            runIde: |
-#              export DISPLAY=:99.0
-#              Xvfb -ac :99 -screen 0 1920x1080x16 &
-#              mkdir -p build/reports
-#              gradle runIdeForUiTests > build/reports/idea.log &
-#          - os: windows-latest
-#            runIde: start gradlew.bat runIdeForUiTests
-          - os: macos-latest
+          - os: ubuntu-latest
             runIde: |
-              mkdir -p build/reports
-              ./gradlew runIdeForUiTests > build/reports/idea.log &
+              export DISPLAY=:99.0
+              Xvfb -ac :99 -screen 0 1920x1080x16 &
+              gradle runIdeForUiTests &
+          - os: windows-latest
+            runIde: start gradlew.bat runIdeForUiTests
+          - os: macos-latest
+            runIde: ./gradlew runIdeForUiTests &
 
     steps:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3
 
-      # Setup Java 11 environment for the next steps
+      # Setup Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v3.11.0
+        uses: actions/setup-java@v3
         with:
           distribution: zulu
-          java-version: 11
+          java-version: 17
           cache: gradle
-
-      # Setup video recording environment
-      - name: Setup FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v2
-        with:
-         # Not strictly necessary, but it may prevent rate limit
-         # errors especially on GitHub-hosted macos machines.
-         token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Pass ide license
-      - name: Decode key file
-        run: |
-          mkdir -p build/idea-sandbox/config-uiTest
-          cd build/idea-sandbox/config-uiTest
-          echo -n "$IDEA_KEY_FILE" | base64 -d > idea.key
-        env:
-          IDEA_KEY_FILE: ${{ secrets.IDEA_KEY_FILE }}
 
       # Run IDEA prepared for UI testing
       - name: Run IDE
@@ -71,21 +58,3 @@ jobs:
       # Run tests
       - name: Tests
         run: ./gradlew test
-
-      # Move video to reports
-      - name: Move video
-        if: ${{ failure() }}
-        run: mv video build/reports
-
-      # Save fails report
-      - name: Save fails report
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: ui-test-fails-report-${{ matrix.os }}
-          path: |
-            build/reports
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
