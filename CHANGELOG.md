@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+## [2.0.0] - 2023-07-06
+
+### Features
+
+- [**breaking**] Migrate from Nuxt v2 to v3 generator
+
 ## [1.2.19] - 2023-06-24
 
 ### Bug Fixes
