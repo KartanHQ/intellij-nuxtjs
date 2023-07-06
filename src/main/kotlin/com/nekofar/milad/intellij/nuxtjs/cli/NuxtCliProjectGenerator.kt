@@ -11,8 +11,8 @@ import com.nekofar.milad.intellij.nuxtjs.NuxtBundle
 import com.nekofar.milad.intellij.nuxtjs.NuxtIcons
 
 class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
-    private val packageName = "create-nuxt-app"
-    private val npxCommand = "create-nuxt-app"
+    private val packageName = "nuxi"
+    private val npxCommand = "nuxi"
 
     override fun getIcon() = NuxtIcons.ProjectGenerator
 
@@ -25,7 +25,12 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
     override fun presentablePackageName() = NuxtBundle.message("nuxt.project.generator.presentable.package.name")
 
     override fun getNpxCommands() = listOf(NpxPackageDescriptor.NpxCommand(packageName, npxCommand))
-    override fun generatorArgs(project: Project, baseDir: VirtualFile) = arrayOf("--overwrite-dir")
+
+    override fun generatorArgs(project: Project?, dir: VirtualFile?, settings: Settings?) =
+        project?.let { arrayOf("init", it.name) }
+
+    override fun generateInTemp(): Boolean = true
+
     override fun filters(project: Project, baseDir: VirtualFile): Array<Filter> = emptyArray()
 
     override fun customizeModule(baseDir: VirtualFile, entry: ContentEntry?) { /* Do nothing */ }
