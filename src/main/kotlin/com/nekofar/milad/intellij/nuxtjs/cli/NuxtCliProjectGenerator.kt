@@ -39,7 +39,7 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
         super.onGettingSmartAfterProjectGeneration(project, baseDir)
         CreateRunConfigurationUtil.npmConfiguration(project, "build")
         CreateRunConfigurationUtil.npmConfiguration(project, "dev")
-        CreateRunConfigurationUtil.npmConfiguration(project, "build")
-        CreateRunConfigurationUtil.npmConfiguration(project, "start")
+        CreateRunConfigurationUtil.npmConfiguration(project, "generate")
+        CreateRunConfigurationUtil.npmConfiguration(project, "preview")
     }
 }
