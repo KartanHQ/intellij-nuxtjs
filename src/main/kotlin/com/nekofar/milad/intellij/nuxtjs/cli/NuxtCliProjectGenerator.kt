@@ -15,17 +15,24 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
     private val npxCommand = "create-nuxt-app"
 
     override fun getIcon() = NuxtIcons.ProjectGenerator
+
     override fun getName() = NuxtBundle.message("nuxt.project.generator.name")
+
     override fun getDescription() = NuxtBundle.message("nuxt.project.generator.description")
+
     override fun packageName() = packageName
+
     override fun presentablePackageName() = NuxtBundle.message("nuxt.project.generator.presentable.package.name")
+
     override fun getNpxCommands() = listOf(NpxPackageDescriptor.NpxCommand(packageName, npxCommand))
     override fun generatorArgs(project: Project, baseDir: VirtualFile) = arrayOf("--overwrite-dir")
     override fun filters(project: Project, baseDir: VirtualFile): Array<Filter> = emptyArray()
+
     override fun customizeModule(baseDir: VirtualFile, entry: ContentEntry?) { /* Do nothing */ }
 
     override fun onGettingSmartAfterProjectGeneration(project: Project, baseDir: VirtualFile) {
         super.onGettingSmartAfterProjectGeneration(project, baseDir)
+        CreateRunConfigurationUtil.npmConfiguration(project, "build")
         CreateRunConfigurationUtil.npmConfiguration(project, "dev")
         CreateRunConfigurationUtil.npmConfiguration(project, "build")
         CreateRunConfigurationUtil.npmConfiguration(project, "start")
