@@ -49,11 +49,11 @@ jobs:
 
       # Validate wrapper
       - name: Gradle Wrapper Validation
-        uses: gradle/wrapper-validation-action@v1.0.6
+        uses: gradle/wrapper-validation-action@v1.1.0
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
+        uses: gradle/gradle-build-action@v2.6.1
 
       # Set environment variables
       - name: Export Properties
@@ -117,11 +117,11 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.5.2
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.6.1
 
       # Run tests
       - name: Run Tests
@@ -130,14 +130,14 @@ jobs:
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
 
       # Upload Kover report to CodeCov
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.4
         with:
           files: ${{ github.workspace }}/build/reports/kover/xml/report.xml
 
@@ -159,7 +159,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.4.2
+        uses: gradle/gradle-build-action@v2.6.1
 
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache
@@ -198,7 +198,7 @@ jobs:
       # Run Qodana inspections
       - name: Qodana - Code Inspection
         if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: JetBrains/qodana-action@v2023.1.5
+        uses: JetBrains/qodana-action@v2023.2.1
         with:
           cache-default-branch-only: true
 
