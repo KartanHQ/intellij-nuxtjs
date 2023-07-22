@@ -9,11 +9,15 @@
 
 
 <!-- Plugin description -->
-Create an app in seconds and setup project through [Nuxt.js](https://nuxtjs.org) official scaffolding tool.
+[Nuxt](https://nuxt.com) is a free and open-source web development framework. It offers an intuitive and extendable
+approach for creating type-safe, performant, and production-grade full-stack web applications and websites
+using `Vue.js`.
 
-Speed up the setup phase of application development for both new and experienced developers.
+This tool enables developers to initialize an app quickly and configure the project using the official scaffolding aid.
+It significantly accelerates the application development setup phase, catering to both novice and experienced
+developers.
 <!-- Plugin description end -->
 
 ## Installation
 
-To install plugin open `Preferences > Plugins > Marketplace`, and search for Nuxt.js.
+For plugin installation, navigate to `Preferences`, then `Plugins`, and finally `Marketplace`. In the search bar, enter `Nuxt`.
