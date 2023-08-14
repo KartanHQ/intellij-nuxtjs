@@ -33,7 +33,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       # Setup Java environment for the next steps
       - name: Setup Java
@@ -41,7 +41,10 @@ jobs:
         with:
           distribution: zulu
           java-version: 17
-          cache: gradle
+
+      # Setup Gradle
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.7.0
 
       # Run IDEA prepared for UI testing
       - name: Run IDE
