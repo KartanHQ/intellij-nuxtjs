@@ -22,10 +22,9 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
 
     override fun getIcon() = NuxtIcons.ProjectGenerator
 
-    override fun filters(project: Project, baseDir: VirtualFile): Array<Filter> = emptyArray()
+    override fun filters(project: Project, baseDir: VirtualFile) = emptyArray<Filter>()
 
-    override fun generatorArgs(project: Project, baseDir: VirtualFile): Array<String> =
-        arrayOf("init", project.name)
+    override fun generatorArgs(project: Project, baseDir: VirtualFile) = arrayOf("init", project.name)
 
     override fun customizeModule(baseDir: VirtualFile, entry: ContentEntry?) { /* Do nothing */ }
 
@@ -43,10 +42,5 @@ class NuxtCliProjectGenerator : NpmPackageProjectGenerator() {
         CreateRunConfigurationUtil.npmConfiguration(project, "preview")
     }
 
-    override fun generateInTemp(): Boolean = true
-
-    override fun validateProjectPath(path: String): String {
-        val error = NodePackageUtil.validateNpmPackageName(PathUtil.getFileName(path))
-        return error ?: super.validateProjectPath(path)
-    }
+    override fun generateInTemp() = true
 }
