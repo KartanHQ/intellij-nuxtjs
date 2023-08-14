@@ -25,11 +25,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  guard:
+    name: Usage guard
+    runs-on: ubuntu-latest
+    steps:
+      # Uses the action-usage-guard action
+      - name: Run Action Usage Guard
+        uses: nekofar/action-usage-guard@develop
+        with:
+          # GitHub access token for authentication.
+          token: ${{ secrets.ACCESS_TOKEN }}
+          # Defines the threshold for the usage guard.
+          threshold: 70
 
   # Prepare environment and build the plugin
   build:
     name: Build
     runs-on: ubuntu-latest
+    needs: [ guard ]
     outputs:
       version: ${{ steps.properties.outputs.version }}
       changelog: ${{ steps.changelog.outputs.changelog }}
@@ -45,11 +58,18 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
 
       # Validate wrapper
       - name: Gradle Wrapper Validation
         uses: gradle/wrapper-validation-action@v1.1.0
+
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: zulu
+          java-version: 17
 
       # Setup Gradle
       - name: Setup Gradle
@@ -67,7 +87,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
           echo "pluginVerifierHomeDir=~/.pluginVerifier" >> $GITHUB_OUTPUT
-
+          
           ./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
 
       # Extract changelog information
@@ -110,14 +130,20 @@ jobs:
   # Run tests and upload a code coverage report
   test:
     name: Test
-    if: false
-    needs: build
+    needs: [ build ]
     runs-on: ubuntu-latest
     steps:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v3.5.3
+
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: zulu
+          java-version: 17
 
       # Setup Gradle
       - name: Setup Gradle
@@ -141,10 +167,38 @@ jobs:
         with:
           files: ${{ github.workspace }}/build/reports/kover/xml/report.xml
 
+  # Run Qodana inspections and provide report
+  inspectCode:
+    name: Inspect code
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      checks: write
+      pull-requests: write
+    steps:
+
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v3.5.3
+
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: zulu
+          java-version: 17
+
+      # Run Qodana inspections
+      - name: Qodana - Code Inspection
+        uses: JetBrains/qodana-action@v2023.2.1
+        with:
+          cache-default-branch-only: true
+
   # Run plugin structure verification along with IntelliJ Plugin Verifier
   verify:
     name: Verify plugin
-    needs: build
+    needs: [ build, test, inspectCode ]
     runs-on: ubuntu-latest
     steps:
       # Remove files to save space
@@ -156,6 +210,13 @@ jobs:
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v3.5.3
+
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: zulu
+          java-version: 17
 
       # Setup Gradle
       - name: Setup Gradle
@@ -180,42 +241,27 @@ jobs:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/build/reports/pluginVerifier
 
-  # Run Qodana inspections and provide report
-  inspectCode:
-    name: Inspect code
-    needs: build
+  # Prepare a draft release for GitHub Releases page for the manual verification
+  # If accepted and published, release workflow would be triggered
+  releaseDraft:
+    name: Release draft
+    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/support/')
+    needs: [ build, verify ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      checks: write
-      pull-requests: write
     steps:
 
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v3.5.3
 
-      # Run Qodana inspections
-      - name: Qodana - Code Inspection
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: JetBrains/qodana-action@v2023.2.1
+      # Setup Java environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v3.12.0
         with:
-          cache-default-branch-only: true
-
-  # Prepare a draft release for GitHub Releases page for the manual verification
-  # If accepted and published, release workflow would be triggered
-  releaseDraft:
-    name: Release draft
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/support/')
-    needs: [ build, verify, inspectCode ]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-
-      # Check out current repository
-      - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+          distribution: zulu
+          java-version: 17
 
       # Remove old release drafts by using the curl request for the available releases with a draft flag
       - name: Remove Old Release Drafts
@@ -228,16 +274,13 @@ jobs:
 
       # Create a new release draft which is not publicly visible and requires manual acceptance
       - name: Create Release Draft
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create v${{ needs.build.outputs.version }} \
-            --draft \
-            --title "v${{ needs.build.outputs.version }}" \
-            --notes "$(cat << 'EOM'
-          ${{ needs.build.outputs.changelog }}
-          EOM
-          )"
+        uses: nekofar/create-github-release@v1.0.12
+        with:
+          tag: v${{ needs.build.outputs.version }} # The name of the tag to be released
+          title: v${{ needs.build.outputs.version }} # The title for the release
+          notes: ${{ needs.build.outputs.changelog }} # The release notes generated in the previous step
+          draft: true # The release will be created as a draft
+          prerelease: ${{ contains(needs.build.outputs.version, '-rc') || contains(needs.build.outputs.version, '-beta') || contains(needs.build.outputs.version, '-alpha') }} # Conditions to mark the release as a pre-release
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
