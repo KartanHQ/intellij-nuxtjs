@@ -16,7 +16,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v3.5.2
+        uses: actions/checkout@v4.1.0
         with:
           fetch-depth: 0
 
@@ -32,7 +32,7 @@ jobs:
 
       # Generate a changelog
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v2.0.6
+        uses: orhun/git-cliff-action@v2.1.0
         id: git-cliff
         with:
           config: cliff.toml
