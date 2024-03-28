@@ -274,7 +274,7 @@ jobs:
 
       # Create a new release draft which is not publicly visible and requires manual acceptance
       - name: Create Release Draft
-        uses: nekofar/create-github-release@v1.0.13
+        uses: nekofar/create-github-release@v1.0.14
         with:
           tag: v${{ needs.build.outputs.version }} # The name of the tag to be released
           title: v${{ needs.build.outputs.version }} # The title for the release
