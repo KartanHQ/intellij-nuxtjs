@@ -58,7 +58,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
 
       # Validate wrapper
       - name: Gradle Wrapper Validation
@@ -73,7 +73,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.3.2
+        uses: gradle/gradle-build-action@v3.4.2
 
       # Set environment variables
       - name: Export Properties
@@ -136,7 +136,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
 
       # Setup Java environment for the next steps
       - name: Setup Java
@@ -147,7 +147,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.3.2
+        uses: gradle/gradle-build-action@v3.4.2
 
       # Run tests
       - name: Run Tests
@@ -163,7 +163,7 @@ jobs:
 
       # Upload Kover report to CodeCov
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v4.4.0
+        uses: codecov/codecov-action@v4.5.0
         with:
           files: ${{ github.workspace }}/build/reports/kover/xml/report.xml
 
@@ -180,7 +180,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
 
       # Setup Java environment for the next steps
       - name: Setup Java
@@ -191,7 +191,7 @@ jobs:
 
       # Run Qodana inspections
       - name: Qodana - Code Inspection
-        uses: JetBrains/qodana-action@v2024.1.5
+        uses: JetBrains/qodana-action@v2024.1.8
         with:
           cache-default-branch-only: true
 
@@ -209,7 +209,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
 
       # Setup Java environment for the next steps
       - name: Setup Java
@@ -220,7 +220,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.3.2
+        uses: gradle/gradle-build-action@v3.4.2
 
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache
@@ -254,7 +254,7 @@ jobs:
 
       # Check out current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.1.6
+        uses: actions/checkout@v4.1.7
 
       # Setup Java environment for the next steps
       - name: Setup Java
