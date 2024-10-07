@@ -73,7 +73,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v4.1.0
 
       # Set environment variables
       - name: Export Properties
@@ -147,7 +147,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v4.1.0
 
       # Run tests
       - name: Run Tests
@@ -220,7 +220,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v4.1.0
 
       # Cache Plugin Verifier IDEs
       - name: Setup Plugin Verifier IDEs Cache
@@ -255,13 +255,6 @@ jobs:
       # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v4.2.0
-
-      # Setup Java environment for the next steps
-      - name: Setup Java
-        uses: actions/setup-java@v4.4.0
-        with:
-          distribution: zulu
-          java-version: 17
 
       # Remove old release drafts by using the curl request for the available releases with a draft flag
       - name: Remove Old Release Drafts
