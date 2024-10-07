@@ -6,8 +6,8 @@ junit = "4.13.2"
 changelog = "2.2.0"
 intelliJPlatform = "2.1.0"
 kotlin = "2.0.20"
-qodana = "0.1.13"
 kover = "0.7.6"
+qodana = "2024.2.3"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
