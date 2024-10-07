@@ -26,6 +26,10 @@ on:
   # Trigger the workflow on manual dispatch
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   guard:
     name: Usage guard
@@ -50,13 +54,6 @@ jobs:
       changelog: ${{ steps.changelog.outputs.changelog }}
       pluginVerifierHomeDir: ${{ steps.properties.outputs.pluginVerifierHomeDir }}
     steps:
-
-      # Free GitHub Actions Environment Disk Space
-      - name: Maximize Build Space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
 
       # Check out the current repository
       - name: Fetch Sources
@@ -276,7 +273,3 @@ jobs:
           notes: ${{ needs.build.outputs.changelog }} # The release notes generated in the previous step
           draft: true # The release will be created as a draft
           prerelease: ${{ contains(needs.build.outputs.version, '-rc') || contains(needs.build.outputs.version, '-beta') || contains(needs.build.outputs.version, '-alpha') }} # Conditions to mark the release as a pre-release
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
