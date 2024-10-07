@@ -86,8 +86,6 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
           echo "pluginVerifierHomeDir=~/.pluginVerifier" >> $GITHUB_OUTPUT
-          
-          ./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
 
       # Extract changelog information
       - name: Prepare Changelog
