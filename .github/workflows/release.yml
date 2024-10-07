@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  # Prepare and publish the plugin to the Marketplace repository
+  # Prepare and publish the plugin to JetBrains Marketplace repository
   release:
     name: Publish Plugin
     runs-on: ubuntu-latest
@@ -18,13 +18,13 @@ jobs:
       pull-requests: write
     steps:
 
-      # Check out current repository
+      # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v4.2.0
         with:
           ref: ${{ github.event.release.tag_name }}
 
-      # Setup Java environment for the next steps
+      # Set up Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4.4.0
         with:
@@ -33,9 +33,9 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3.5.0
+        uses: gradle/actions/setup-gradle@v4.1.0
 
-      # Publish the plugin to the Marketplace
+      # Publish the plugin to JetBrains Marketplace
       - name: Publish Plugin
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
