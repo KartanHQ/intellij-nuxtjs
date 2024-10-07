@@ -1,6 +1,6 @@
 [versions]
 # libraries
-annotations = "25.0.0"
+junit = "4.13.2"
 
 # plugins
 kotlin = "2.0.20"
@@ -10,7 +10,7 @@ qodana = "0.1.13"
 kover = "0.7.6"
 
 [libraries]
-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 [plugins]
 changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
