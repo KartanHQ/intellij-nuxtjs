@@ -7,6 +7,8 @@ updates:
     # Check for updates every weekday
     schedule:
       interval: "daily"
+      time: "00:00"
+      timezone: "UTC"
     # Add assignees
     assignees:
       - "nekofar"
@@ -32,6 +34,8 @@ updates:
     # Check for updates every weekday
     schedule:
       interval: "daily"
+      time: "00:00"
+      timezone: "UTC"
     # Add assignees
     assignees:
       - "nekofar"
