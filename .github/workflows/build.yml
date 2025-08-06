@@ -44,7 +44,7 @@ jobs:
           # Defines the threshold for the usage guard.
           threshold: 70
 
-  # Prepare environment and build the plugin
+  # Prepare the environment and build the plugin
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -66,11 +66,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v4.2.2
 
-      # Validate wrapper
-      - name: Gradle Wrapper Validation
-        uses: gradle/actions/wrapper-validation@v4.3.1
-
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4.7.1
         with:
@@ -124,7 +120,7 @@ jobs:
 
           echo "filename=${FILENAME:0:-4}" >> $GITHUB_OUTPUT
 
-      # Store already-built plugin as an artifact for downloading
+      # Store an already-built plugin as an artifact for downloading
       - name: Upload artifact
         uses: actions/upload-artifact@v4.6.2
         with:
@@ -149,7 +145,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v4.2.2
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4.7.1
         with:
@@ -159,6 +155,8 @@ jobs:
       # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4.3.1
+        with:
+          cache-read-only: true
 
       # Run tests
       - name: Run Tests
@@ -177,8 +175,9 @@ jobs:
         uses: codecov/codecov-action@v5.4.0
         with:
           files: ${{ github.workspace }}/build/reports/kover/report.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
-  # Run Qodana inspections and provide report
+  # Run Qodana inspections and provide a report
   inspectCode:
     name: Inspect code
     needs: [ build ]
@@ -191,7 +190,7 @@ jobs:
 
       # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
           large-packages: false
@@ -203,7 +202,7 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0  # a full history is required for pull request analysis
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4.7.1
         with:
@@ -225,7 +224,7 @@ jobs:
 
       # Free GitHub Actions Environment Disk Space
       - name: Maximize Build Space
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@v1.3.1
         with:
           tool-cache: false
           large-packages: false
@@ -234,7 +233,7 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v4.2.2
 
-      # Set up Java environment for the next steps
+      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v4.7.1
         with:
@@ -244,17 +243,12 @@ jobs:
       # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4.3.1
-
-      # Cache Plugin Verifier IDEs
-      - name: Setup Plugin Verifier IDEs Cache
-        uses: actions/cache@v4.2.3
         with:
-          path: ${{ needs.build.outputs.pluginVerifierHomeDir }}/ides
-          key: plugin-verifier-${{ hashFiles('build/listProductsReleases.txt') }}
+          cache-read-only: true
 
       # Run Verify Plugin task and IntelliJ Plugin Verifier tool
       - name: Run Plugin Verification tasks
-        run: ./gradlew verifyPlugin -Dplugin.verifier.home.dir=${{ needs.build.outputs.pluginVerifierHomeDir }} -Dorg.gradle.jvmargs="-Xmx4096m"
+        run: ./gradlew verifyPlugin
 
       # Collect Plugin Verifier Result
       - name: Collect Plugin Verifier Result
@@ -265,7 +259,7 @@ jobs:
           path: ${{ github.workspace }}/build/reports/pluginVerifier
 
   # Prepare a draft release for GitHub Releases page for the manual verification
-  # If accepted and published, release workflow would be triggered
+  # If accepted and published, the release workflow would be triggered
   releaseDraft:
     name: Release draft
     if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/support/')
