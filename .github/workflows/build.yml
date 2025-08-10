@@ -75,7 +75,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.0
+        uses: gradle/actions/setup-gradle@v4.4.2
 
       # Set environment variables
       - name: Export Properties
@@ -154,7 +154,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.4.0
+        uses: gradle/actions/setup-gradle@v4.4.2
 
       # Run tests
       - name: Run Tests
@@ -240,7 +240,7 @@ jobs:
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.3.1
+        uses: gradle/actions/setup-gradle@v4.4.2
         with:
           cache-read-only: true
 
