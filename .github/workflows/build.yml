@@ -64,18 +64,18 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4.7.1
+        uses: actions/setup-java@v5.0.0
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.3.1
+        uses: gradle/actions/setup-gradle@v4.4.3
 
       # Set environment variables
       - name: Export Properties
@@ -143,20 +143,18 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4.7.1
+        uses: actions/setup-java@v5.0.0
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.3.1
-        with:
-          cache-read-only: true
+        uses: gradle/actions/setup-gradle@v4.4.3
 
       # Run tests
       - name: Run Tests
@@ -172,7 +170,7 @@ jobs:
 
       # Upload the Kover report to CodeCov
       - name: Upload Code Coverage Report
-        uses: codecov/codecov-action@v5.4.0
+        uses: codecov/codecov-action@v5.5.1
         with:
           files: ${{ github.workspace }}/build/reports/kover/report.xml
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -197,14 +195,14 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0  # a full history is required for pull request analysis
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4.7.1
+        uses: actions/setup-java@v5.0.0
         with:
           distribution: zulu
           java-version: 21
@@ -231,18 +229,18 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4.7.1
+        uses: actions/setup-java@v5.0.0
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4.3.1
+        uses: gradle/actions/setup-gradle@v4.4.3
         with:
           cache-read-only: true
 
@@ -271,7 +269,7 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       # Remove old release drafts by using the curl request for the available releases with a draft flag
       - name: Remove Old Release Drafts
