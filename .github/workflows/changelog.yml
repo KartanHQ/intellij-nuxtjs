@@ -58,7 +58,7 @@ jobs:
 
       # Create pull request
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.9
+        uses: peter-evans/create-pull-request@v7.0.11
         with:
           delete-branch: true
           branch-suffix: short-commit-hash
