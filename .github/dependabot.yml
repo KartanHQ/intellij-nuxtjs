@@ -9,9 +9,6 @@ updates:
       interval: "daily"
       time: "00:00"
       timezone: "UTC"
-    # Add assignees
-    assignees:
-      - "nekofar"
     # Include a list of updated dependencies
     commit-message:
       prefix: "ci"
@@ -36,9 +33,6 @@ updates:
       interval: "daily"
       time: "00:00"
       timezone: "UTC"
-    # Add assignees
-    assignees:
-      - "nekofar"
     # Include a list of updated dependencies
     commit-message:
       prefix: "build"
